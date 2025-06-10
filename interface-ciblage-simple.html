@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Ciblage Géographique - Communes Françaises</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .query-display {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            min-height: 60px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        .copy-btn:hover {
+            background: #138496;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            border: 1px solid #b8daff;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .instructions h4 {
+            margin-top: 0;
+            color: #004085;
+        }
+        
+        .instructions ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .listmonk-link {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: all 0.2s;
+        }
+        
+        .listmonk-link:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 Ciblage Géographique</h1>
+        <p>Générateur de requêtes SQL pour les communes françaises</p>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h3>🗺️ Ciblage par Département</h3>
+            <div class="button-grid">
+                <button class="btn btn-primary" onclick="setQuery('dept_75')">Paris (75)</button>
+                <button class="btn btn-primary" onclick="setQuery('dept_13')">Bouches-du-Rhône (13)</button>
+                <button class="btn btn-primary" onclick="setQuery('dept_69')">Rhône (69)</button>
+                <button class="btn btn-primary" onclick="setQuery('dept_59')">Nord (59)</button>
+            </div>
+            
+            <h4>Régions</h4>
+            <div class="button-grid">
+                <button class="btn btn-secondary" onclick="setQuery('region_idf')">Île-de-France</button>
+                <button class="btn btn-secondary" onclick="setQuery('region_paca')">PACA</button>
+                <button class="btn btn-secondary" onclick="setQuery('region_occitanie')">Occitanie</button>
+                <button class="btn btn-secondary" onclick="setQuery('region_aura')">Auvergne-Rhône-Alpes</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>👥 Ciblage par Population</h3>
+            <div class="button-grid">
+                <button class="btn btn-success" onclick="setQuery('pop_metropoles')">Métropoles (>100k)</button>
+                <button class="btn btn-success" onclick="setQuery('pop_grandes')">Grandes villes (50k-100k)</button>
+                <button class="btn btn-success" onclick="setQuery('pop_moyennes')">Villes moyennes (10k-50k)</button>
+                <button class="btn btn-success" onclick="setQuery('pop_petites')">Petites communes (<10k)</button>
+            </div>
+            
+            <h4>Ciblage Combiné</h4>
+            <div class="button-grid">
+                <button class="btn btn-primary" onclick="setQuery('combo_paris_grandes')">Grandes villes IDF</button>
+                <button class="btn btn-primary" onclick="setQuery('combo_paca_petites')">Petites communes PACA</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section full-width">
+        <h3>📝 Requête SQL Générée</h3>
+        <div class="query-display" id="queryDisplay">
+            Cliquez sur un bouton ci-dessus pour générer une requête SQL...
+        </div>
+        <button class="copy-btn" onclick="copyQuery()">📋 Copier la requête</button>
+        
+        <div class="alert alert-info">
+            <strong>💡 Astuce :</strong> Vous pouvez modifier manuellement la requête ci-dessus avant de la copier.
+        </div>
+    </div>
+
+    <div class="instructions">
+        <h4>📋 Comment utiliser ces requêtes dans Listmonk</h4>
+        <ol>
+            <li>Cliquez sur un bouton de ciblage ci-dessus</li>
+            <li>Copiez la requête SQL générée</li>
+            <li>Allez dans Listmonk → <strong>Campagnes</strong> → <strong>Nouvelle campagne</strong></li>
+            <li>Dans la section <strong>"Listes"</strong>, cliquez sur <strong>"Requête avancée"</strong></li>
+            <li>Collez la requête SQL dans le champ qui apparaît</li>
+            <li>Cliquez sur <strong>"Aperçu"</strong> pour voir le nombre de destinataires</li>
+            <li>Continuez la création de votre campagne</li>
+        </ol>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="http://localhost:9000" class="listmonk-link" target="_blank">
+                🚀 Ouvrir Listmonk
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const queries = {
+            // Départements
+            dept_75: "subscribers.attribs->>'departement' = '75'",
+            dept_13: "subscribers.attribs->>'departement' = '13'",
+            dept_69: "subscribers.attribs->>'departement' = '69'",
+            dept_59: "subscribers.attribs->>'departement' = '59'",
+            
+            // Régions
+            region_idf: "subscribers.attribs->>'departement' IN ('75','77','78','91','92','93','94','95')",
+            region_paca: "subscribers.attribs->>'departement' IN ('04','05','06','13','83','84')",
+            region_occitanie: "subscribers.attribs->>'departement' IN ('09','11','12','30','31','32','34','46','48','65','66','81','82')",
+            region_aura: "subscribers.attribs->>'departement' IN ('01','03','07','15','26','38','42','43','63','69','73','74')",
+            
+            // Population
+            pop_metropoles: "(subscribers.attribs->>'population')::INT > 100000",
+            pop_grandes: "(subscribers.attribs->>'population')::INT BETWEEN 50000 AND 100000",
+            pop_moyennes: "(subscribers.attribs->>'population')::INT BETWEEN 10000 AND 50000",
+            pop_petites: "(subscribers.attribs->>'population')::INT < 10000",
+            
+            // Combiné
+            combo_paris_grandes: "subscribers.attribs->>'departement' IN ('75','77','78','91','92','93','94','95') AND (subscribers.attribs->>'population')::INT > 50000",
+            combo_paca_petites: "subscribers.attribs->>'departement' IN ('04','05','06','13','83','84') AND (subscribers.attribs->>'population')::INT < 5000"
+        };
+
+        function setQuery(queryKey) {
+            const query = queries[queryKey];
+            if (query) {
+                document.getElementById('queryDisplay').textContent = query;
+            }
+        }
+
+        function copyQuery() {
+            const queryText = document.getElementById('queryDisplay').textContent;
+            
+            if (queryText && queryText !== "Cliquez sur un bouton ci-dessus pour générer une requête SQL...") {
+                navigator.clipboard.writeText(queryText).then(() => {
+                    const btn = event.target;
+                    const originalText = btn.textContent;
+                    btn.textContent = "✅ Copié !";
+                    btn.style.background = "#28a745";
+                    
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = "#17a2b8";
+                    }, 2000);
+                }).catch(() => {
+                    // Fallback pour les navigateurs plus anciens
+                    const textArea = document.createElement('textarea');
+                    textArea.value = queryText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    alert('Requête copiée dans le presse-papiers !');
+                });
+            } else {
+                alert('Veuillez d\'abord sélectionner un type de ciblage.');
+            }
+        }
+
+        // Permettre l'édition de la requête
+        document.getElementById('queryDisplay').addEventListener('click', function() {
+            if (this.textContent !== "Cliquez sur un bouton ci-dessus pour générer une requête SQL...") {
+                this.contentEditable = true;
+                this.focus();
+                this.style.border = "2px solid #667eea";
+            }
+        });
+
+        document.getElementById('queryDisplay').addEventListener('blur', function() {
+            this.contentEditable = false;
+            this.style.border = "1px solid #dee2e6";
+        });
+    </script>
+</body>
+</html>

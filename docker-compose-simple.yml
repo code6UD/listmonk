@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    container_name: listmonk_db
+    environment:
+      POSTGRES_USER: listmonk
+      POSTGRES_PASSWORD: listmonk
+      POSTGRES_DB: listmonk
+    ports:
+      - "5432:5432"
+    volumes:
+      - listmonk_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U listmonk -d listmonk"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    image: listmonk/listmonk:latest
+    container_name: listmonk_app
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "9000:9000"
+    environment:
+      LISTMONK_app__address: "0.0.0.0:9000"
+      LISTMONK_db__host: "db"
+      LISTMONK_db__port: 5432
+      LISTMONK_db__user: "listmonk"
+      LISTMONK_db__password: "listmonk"
+      LISTMONK_db__database: "listmonk"
+      LISTMONK_db__ssl_mode: "disable"
+    restart: unless-stopped
+
+volumes:
+  listmonk_db_data:
