@@ -3,7 +3,6 @@ package geo
 import (
 	"database/sql"
 	"fmt"
-	"strings"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"

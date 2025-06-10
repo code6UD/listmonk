@@ -36,7 +36,7 @@ check() {
 # Vérifications Docker
 echo ""
 log_info "🐳 Vérification Docker"
-check "docker ps | grep -q listmonk_db" "Base de données PostgreSQL en cours d'exécution"
+check "docker ps | grep -q 'listmonk_db\|postgres'" "Base de données PostgreSQL en cours d'exécution"
 check "docker ps | grep -q listmonk_app" "Application Listmonk en cours d'exécution"
 
 # Vérifications réseau
