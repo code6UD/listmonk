@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bookmarklet - Ciblage Géographique Listmonk</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .bookmarklet { background: #f8f9fa; padding: 15px; border-radius: 5px; border-left: 4px solid #007bff; }
+        .bookmarklet a { color: #007bff; text-decoration: none; font-weight: bold; }
+        .instructions { background: #e9ecef; padding: 15px; border-radius: 5px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>🎯 Interface de Ciblage Géographique pour Listmonk</h1>
+    
+    <h2>Installation</h2>
+    <div class="bookmarklet">
+        <p><strong>Glissez ce lien dans votre barre de favoris :</strong></p>
+        <p><a href="javascript:(function(){var s=document.createElement('script');s.src='http://localhost:9000/public/geo-targeting.js';document.head.appendChild(s);})();">🎯 Ciblage Géo</a></p>
+    </div>
+    
+    <div class="instructions">
+        <h3>Instructions d'utilisation :</h3>
+        <ol>
+            <li>Glissez le lien ci-dessus dans votre barre de favoris</li>
+            <li>Allez sur votre interface Listmonk : <a href="http://localhost:9000" target="_blank">http://localhost:9000</a></li>
+            <li>Naviguez vers la page "Abonnés"</li>
+            <li>Cliquez sur le favori "🎯 Ciblage Géo" que vous venez d'ajouter</li>
+            <li>Un bouton flottant "🎯 Ciblage Géo" apparaîtra en haut à droite</li>
+            <li>Cliquez dessus pour ouvrir l'interface de ciblage géographique</li>
+        </ol>
+    </div>
+    
+    <h2>Fonctionnalités</h2>
+    <ul>
+        <li>🗺️ <strong>Sélection par département</strong> : Choisissez un ou plusieurs départements français</li>
+        <li>🏙️ <strong>Filtres rapides par région</strong> : Île-de-France, PACA, Occitanie, etc.</li>
+        <li>👥 <strong>Filtrage par population</strong> : Définissez des seuils de population minimum et maximum</li>
+        <li>📊 <strong>Aperçu en temps réel</strong> : Voyez le nombre estimé de communes correspondantes</li>
+        <li>✅ <strong>Application directe</strong> : Les filtres s'appliquent automatiquement dans Listmonk</li>
+    </ul>
+    
+    <h2>Exemples d'utilisation</h2>
+    <ul>
+        <li><strong>Campagne régionale</strong> : Sélectionnez "Île-de-France" pour cibler toutes les communes d'IDF</li>
+        <li><strong>Petites communes</strong> : Filtrez par population &lt; 2000 habitants</li>
+        <li><strong>Grandes villes</strong> : Filtrez par population &gt; 50000 habitants</li>
+        <li><strong>Département spécifique</strong> : Sélectionnez uniquement le département 75 (Paris)</li>
+    </ul>
+    
+    <div style="margin-top: 30px; padding: 15px; background: #d4edda; border-radius: 5px; border-left: 4px solid #28a745;">
+        <strong>✅ Système opérationnel !</strong><br>
+        32 519 communes françaises sont disponibles pour le ciblage géographique.
+    </div>
+</body>
+</html>
